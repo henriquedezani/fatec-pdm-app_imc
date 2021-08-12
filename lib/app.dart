@@ -8,18 +8,37 @@ class App extends StatelessWidget {
     // Statefull = Executa toda vez que o estado altera (setState())
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(),
-        body: Text("Hello"),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-        ),
-        drawer: Drawer(),
-        endDrawer: ListView(),
-        bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Home"),
+        body: Column(
+          children: [
+            Flexible(
+              child: Container(
+                padding: EdgeInsets.all(50),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Altura'),
+                    TextField(),
+                    Text('Peso'),
+                    TextField(),
+                    Container(
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Text('Calcular IMC'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Flexible(
+              flex: 2,
+              child: Container(
+                color: Color(0xFFFF0000),
+              ),
+            ),
           ],
         ),
       ),
