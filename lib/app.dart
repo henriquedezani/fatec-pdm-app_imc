@@ -1,7 +1,40 @@
 import 'package:flutter/material.dart';
 
-class App extends StatelessWidget {
-  // Build é o método responsável por desenhar a tela.
+class App extends StatefulWidget {
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  final txtCtrlAltura = new TextEditingController();
+  final txtCtrlPeso = new TextEditingController();
+
+  String imagem = "images/ideal.png";
+
+  String classificaIMC(double imc) {
+    if (imc < 18.5)
+      return "magreza";
+    else if (imc < 24.9)
+      return "ideal";
+    else if (imc < 29.9)
+      return "sobre";
+    else
+      return "obesidade";
+  }
+
+  void calcularIMC() {
+    final altura = double.parse(txtCtrlAltura.text);
+    final peso = double.parse(txtCtrlPeso.text);
+
+    final imc = peso / (altura * altura);
+    final classificacao = classificaIMC(imc);
+
+    // todo vez que executo o SetState, o app executará
+    // o método build().
+    imagem = "images/$classificacao.png";
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     // Stateless = Executa uma única vez.
@@ -18,14 +51,18 @@ class App extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Altura'),
-                    TextField(),
+                    TextField(
+                      controller: txtCtrlAltura,
+                    ),
                     Text('Peso'),
-                    TextField(),
+                    TextField(
+                      controller: txtCtrlPeso,
+                    ),
                     Container(
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: calcularIMC,
                         child: Text('Calcular IMC'),
                       ),
                     ),
@@ -36,7 +73,7 @@ class App extends StatelessWidget {
             Flexible(
               flex: 2,
               child: Container(
-                color: Color(0xFFFF0000),
+                child: Image.asset(imagem),
               ),
             ),
           ],
